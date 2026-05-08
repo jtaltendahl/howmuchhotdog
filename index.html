@@ -11,7 +11,7 @@
             flex-direction: column; 
             align-items: center; 
             padding-top: 50px; 
-            background-color: #ffe0b2; /* Subtle hot dog bun color */
+            background-color: #ffe0b2; 
         }
         .card { 
             background: white; 
@@ -25,7 +25,7 @@
             font-family: monospace; 
             font-size: 8px; 
             line-height: 1.2;
-            color: #bf360c; /* Mustard/Ketchup-ish red-brown */
+            color: #bf360c; 
             margin-bottom: 20px;
             background: #fff9f0;
             padding: 10px;
@@ -52,7 +52,7 @@
         button:hover { background-color: #bf360c; }
         #result { 
             margin-top: 1.5rem; 
-            font-size: 2.2rem; 
+            font-size: 1.5rem; /* Adjusted slightly for longer error text */
             font-weight: 800; 
             color: #333;
             text-transform: uppercase;
@@ -62,7 +62,6 @@
 <body>
 
     <div class="card">
-        <!-- ASCII HOT DOG ART -->
         <pre>
        _..._
      .'     '.
@@ -79,7 +78,7 @@
    '-.........-'
         </pre>
 
-        <label for="dogInput" style="display: block; margin-bottom: 10px; font-weight: bold;">how many hot dog?</label>
+        <label for="dogInput" style="display: block; margin-bottom: 10px; font-weight: bold;">how much hot dog?</label>
         <input type="number" id="dogInput" step="0.00001" placeholder="0.00000">
         <br>
         <button onclick="calculateDogs()">Submit</button>
@@ -88,12 +87,23 @@
 
     <script>
         function calculateDogs() {
-            const input = document.getElementById('dogInput').value;
-            if (input === "") return;
+            const inputElement = document.getElementById('dogInput');
+            const inputValue = inputElement.value;
+            const resultDiv = document.getElementById('result');
 
-            // Round to 5 decimal places
-            const num = parseFloat(parseFloat(input).toFixed(5));
+            if (inputValue === "") return;
+
+            // Buttweiler Constant Check
+            if (inputValue === "9999999999988888") {
+                resultDiv.innerText = "Ah yes, the infamous Buttweiler Constant. Despite being a theoretical number, it is clearly HOTS DOGSL.";
+                resultDiv.style.color = "#d84315"; // Error-ish red
+                return;
+            }
+
+            // Normal Logic
+            const num = parseFloat(parseFloat(inputValue).toFixed(5));
             let resultText = "";
+            resultDiv.style.color = "#333"; // Reset color
 
             if (num <= 1) {
                 resultText = "hot dog";
@@ -103,7 +113,7 @@
                 resultText = "hots dogs";
             }
 
-            document.getElementById('result').innerText = resultText;
+            resultDiv.innerText = resultText;
         }
     </script>
 </body>
